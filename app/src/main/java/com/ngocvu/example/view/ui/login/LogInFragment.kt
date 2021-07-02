@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ngocvu.example.R
 import com.ngocvu.example.utils.Prefs
+import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,10 +44,20 @@ class LogInFragment : Fragment() {
             var email = et_email.text.toString()
             var password = et_password.text.toString()
             viewModel.login(email,password)
-            viewModel.movieList.observe(viewLifecycleOwner) { response ->
-                prefs.accessToken = response.data.attributes.access_token
-                prefs.refreshToken =response.data.attributes.refresh_token
-                navController.navigate(R.id.action_logInFragment_to_startUpFragment)
+            viewModel.loginRes.observe(viewLifecycleOwner) { response ->
+                when(response) {
+                    is ViewState.Loading -> {
+                        login_fetch_progress.visibility = View.VISIBLE
+                        btn_login.visibility = View.GONE
+                    }
+                    is ViewState.Success -> {
+                        prefs.accessToken = response.value!!.data.attributes.access_token
+                        prefs.refreshToken =response.value!!.data.attributes.refresh_token
+                        navController.navigate(R.id.action_logInFragment_to_startUpFragment)
+                    }
+
+                }
+
             }
 
         }

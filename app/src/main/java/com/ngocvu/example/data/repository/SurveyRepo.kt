@@ -1,16 +1,13 @@
 package com.ngocvu.example.data.repository
 
-import android.util.Log
 import com.ngocvu.example.BuildConfig
 import com.ngocvu.example.data.request.AuthReqData
-import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
-import com.ngocvu.example.data.res.SurveyListReqData
+import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.networking.SurveyAppApi
-import com.ngocvu.example.utils.Prefs
 import javax.inject.Inject
 
-class AccessTokenRepo @Inject constructor(val api: SurveyAppApi){
+class SurveyRepo @Inject constructor(val api: SurveyAppApi){
     suspend fun getToken(email: String, password:String) : AuthResData.Res{
         var res =  api.auth(
             AuthReqData(
@@ -26,10 +23,10 @@ class AccessTokenRepo @Inject constructor(val api: SurveyAppApi){
 
     }
 
-    suspend fun getList() : SurveyListReqData.Res{
+    suspend fun getList() : SurveyListResData.Res{
         var res =  api.getSurvey(
             1,
-            3
+            5
         )
         return res
 

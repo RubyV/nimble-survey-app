@@ -3,7 +3,7 @@ package com.ngocvu.example.networking
 import com.ngocvu.example.data.request.AuthReqData
 import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
-import com.ngocvu.example.data.res.SurveyListReqData
+import com.ngocvu.example.data.res.SurveyListResData
 import retrofit2.http.*
 
 interface SurveyAppApi {
@@ -18,7 +18,7 @@ interface SurveyAppApi {
     suspend fun getSurvey(
         @Query("number") number: Int = 1,
         @Query("size")  size: Int = 5
-     ): SurveyListReqData.Res
+     ): SurveyListResData.Res
 
 
     @POST("oauth/token")

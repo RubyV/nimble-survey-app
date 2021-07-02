@@ -1,17 +1,16 @@
 package com.ngocvu.example.view.ui.surveylist
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ngocvu.example.R
-import com.ngocvu.example.data.res.SurveyListReqData
+import com.ngocvu.example.data.res.SurveyListResData
 import kotlinx.android.synthetic.main.item_survey.view.*
 
-class SurveyListAdapter(private val context: Context, private val surveyList: ArrayList<SurveyListReqData.Data>) : RecyclerView.Adapter<SurveyListAdapter.CheeseViewHolder>() {
+class SurveyListAdapter(private val context: Context, private val surveyList: ArrayList<SurveyListResData.Data>) : RecyclerView.Adapter<SurveyListAdapter.CheeseViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheeseViewHolder {
         return CheeseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_survey, parent, false))
     }

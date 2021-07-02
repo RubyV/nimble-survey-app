@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
 import com.ngocvu.example.R
-import com.ngocvu.example.data.res.SurveyListReqData
+import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_survey_list.*
@@ -23,7 +23,7 @@ class SurveyListFragment : Fragment() {
 
     private lateinit var viewModel: SurveyListViewModel
     private lateinit var navController: NavController
-    private var survetList = ArrayList<SurveyListReqData.Data>()
+    private var survetList = ArrayList<SurveyListResData.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

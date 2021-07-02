@@ -3,10 +3,10 @@ package com.ngocvu.example.view.ui.login
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ngocvu.example.data.repository.AccessTokenRepo
+import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.data.res.AuthResData
-import com.ngocvu.example.data.res.SurveyListReqData
-import com.ngocvu.example.utils.Prefs
+import com.ngocvu.example.data.res.SurveyListResData
+import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -15,25 +15,24 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val repository: AccessTokenRepo,
+    private val repository: SurveyRepo,
 ) : ViewModel() {
-    val movieList = MutableLiveData<AuthResData.Res>()
-    val dataList = MutableLiveData<SurveyListReqData.Res>()
-
+    val loginRes = MutableLiveData<ViewState<AuthResData.Res>>()
     var job: Job? = null
     fun login(email: String, password:String) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.getToken("dev@nimblehq.co", "12345678")
-            withContext(Dispatchers.Main) {
-                try {
-                    Log.d("Git", response.toString())
-                    movieList.postValue(response)
-                }
-                catch (e: Exception)
-                {
-                    Log.d("Git", e.toString())
-                }
+            loginRes.postValue(ViewState.Loading())
+            try {
+                val response = repository.getToken("dev@nimblehq.co", "12345678")
+                withContext(Dispatchers.Main) {
 
+                    Log.d("Git", response.toString())
+                    loginRes.postValue(ViewState.Success(response))
+                }
+            }
+            catch (e: Exception)
+            {
+                loginRes.postValue(ViewState.Error(e.toString()))
             }
         }
 

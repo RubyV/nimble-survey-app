@@ -1,6 +1,6 @@
 package com.ngocvu.example.data.res
 
-sealed class SurveyListReqData {
+sealed class SurveyListResData {
 
     data class Res(
         val data: List<Data>
