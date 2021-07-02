@@ -1,6 +1,7 @@
 package com.ngocvu.example.data.repository
 
 import android.util.Log
+import com.ngocvu.example.BuildConfig
 import com.ngocvu.example.data.request.AuthReqData
 import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
@@ -16,8 +17,8 @@ class AccessTokenRepo @Inject constructor(val api: SurveyAppApi){
                 "password",
                 email,
                 password,
-                "6GbE8dhoz519l2N_F99StqoOs6Tcmm1rXgda4q__rIw",
-                "_ayfIm7BeUAhx2W1OUqi20fwO3uNxfo1QstyKlFCgHw"
+                BuildConfig.CLIENT_ID,
+                BuildConfig.CLIENT_SECRET,
             )
         )
 
@@ -34,16 +35,16 @@ class AccessTokenRepo @Inject constructor(val api: SurveyAppApi){
 
     }
 
-    fun refreshToken() : AuthResData.Res{
-        var res =  api.refreshToken(
-            RefreshTokenReqData(
-                "refresh_token",
-                "WN9LHOUTgJbALXFx2oj64FPrfC1-kQXpgo2fqC1rwKo",
-                "6GbE8dhoz519l2N_F99StqoOs6Tcmm1rXgda4q__rIw",
-                "_ayfIm7BeUAhx2W1OUqi20fwO3uNxfo1QstyKlFCgHw"
-            )
-        )
-        return res
-
-    }
+//    fun refreshToken() : AuthResData.Res{
+//        var res =  api.refreshToken(
+//            RefreshTokenReqData(
+//                "refresh_token",
+//                "WN9LHOUTgJbALXFx2oj64FPrfC1-kQXpgo2fqC1rwKo",
+//                BuildConfig.CLIENT_ID,
+//                BuildConfig.CLIENT_SECRET,
+//            )
+//        )
+//        return res
+//
+//    }
 }
