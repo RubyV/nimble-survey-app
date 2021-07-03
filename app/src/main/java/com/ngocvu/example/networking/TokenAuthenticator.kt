@@ -3,6 +3,7 @@ package com.ngocvu.example.networking
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import com.ngocvu.example.BuildConfig
 import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.utils.Prefs
@@ -21,7 +22,7 @@ class TokenAuthenticator(private val prefs: Prefs): Authenticator {
             val client = OkHttpClient()
             val url = URL("https://survey-api.nimblehq.co/api/v1/oauth/token")
 
-            val authRequest = RefreshTokenReqData("refresh_token", prefs.accessToken, "6GbE8dhoz519l2N_F99StqoOs6Tcmm1rXgda4q__rIw", "_ayfIm7BeUAhx2W1OUqi20fwO3uNxfo1QstyKlFCgHw")
+            val authRequest = RefreshTokenReqData("refresh_token", prefs.accessToken, BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET)
             val requestJson = Gson().toJson(authRequest)
 
             val mediaType = "application/json".toMediaTypeOrNull()

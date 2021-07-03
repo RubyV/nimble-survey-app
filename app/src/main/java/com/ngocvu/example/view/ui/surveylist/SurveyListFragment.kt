@@ -23,7 +23,7 @@ class SurveyListFragment : Fragment() {
 
     private lateinit var viewModel: SurveyListViewModel
     private lateinit var navController: NavController
-    private var survetList = ArrayList<SurveyListResData.Data>()
+    private var surveyList = ArrayList<SurveyListResData.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,9 +61,9 @@ class SurveyListFragment : Fragment() {
                     btn_take_survey.visibility = View.VISIBLE
                     for(i in response.value!!.data)
                     {
-                        survetList.add(i)
+                        surveyList.add(i)
                     }
-                    pager.adapter = SurveyListAdapter(requireContext(),survetList)
+                    pager.adapter = SurveyListAdapter(requireContext(),surveyList)
                     pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
                 }

@@ -10,12 +10,18 @@ import com.ngocvu.example.R
 import com.ngocvu.example.data.res.SurveyListResData
 import kotlinx.android.synthetic.main.item_survey.view.*
 
-class SurveyListAdapter(private val context: Context, private val surveyList: ArrayList<SurveyListResData.Data>) : RecyclerView.Adapter<SurveyListAdapter.CheeseViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheeseViewHolder {
-        return CheeseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_survey, parent, false))
+class SurveyListAdapter(
+    private val context: Context,
+    private val surveyList: ArrayList<SurveyListResData.Data>
+) : RecyclerView.Adapter<SurveyListAdapter.SurveyViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyViewHolder {
+        return SurveyViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_survey, parent, false)
+        )
     }
 
-    override fun onBindViewHolder(holder: CheeseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SurveyViewHolder, position: Int) {
         holder.surveyTitle.text = surveyList[position].attributes.title
         holder.surveyDesc.text = surveyList[position].attributes.description
         var highResImgUrl = surveyList[position].attributes.cover_image_url + "l"
@@ -29,8 +35,7 @@ class SurveyListAdapter(private val context: Context, private val surveyList: Ar
     }
 
 
-
-    class CheeseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class SurveyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val surveyTitle = view.tv_title
         val surveyDesc = view.tv_description

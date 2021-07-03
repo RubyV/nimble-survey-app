@@ -44,7 +44,7 @@ object AppModule {
 
 
     @Provides
-    @BonuslinkApiStandard
+    @SurveyApiStandard
     @Singleton
     fun provideRetrofit(@OkHttpClientQualifier okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -57,7 +57,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUnsplashApi(@BonuslinkRetrofitInterfaceStandard retrofit: Retrofit): SurveyAppApi =
+    fun provideSurveyApi(@SurveyRetrofitInterfaceStandard retrofit: Retrofit): SurveyAppApi =
         retrofit.create(SurveyAppApi::class.java)
 
 
@@ -68,8 +68,8 @@ object AppModule {
 
 
 
-annotation class BonuslinkRetrofitInterfaceStandard
+annotation class SurveyRetrofitInterfaceStandard
 
-annotation class BonuslinkApiStandard
+annotation class SurveyApiStandard
 
 annotation class OkHttpClientQualifier
