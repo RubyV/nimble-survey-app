@@ -40,26 +40,29 @@ class LogInFragment : Fragment() {
 
     }
     fun initView() {
+//        btn_login.setOnClickListener {
+//            var email = et_email.text.toString()
+//            var password = et_password.text.toString()
+//            viewModel.login(email,password)
+//            viewModel.loginRes.observe(viewLifecycleOwner) { response ->
+//                when(response) {
+//                    is ViewState.Loading -> {
+//                        login_fetch_progress.visibility = View.VISIBLE
+//                        btn_login.visibility = View.GONE
+//                    }
+//                    is ViewState.Success -> {
+//                        prefs.accessToken = response.value!!.data.attributes.accessToken
+//                        prefs.refreshToken =response.value!!.data.attributes.refreshToken
+//                        navController.navigate(R.id.action_logInFragment_to_startUpFragment)
+//                    }
+//
+//                }
+//
+//            }
+//
+//        }
         btn_login.setOnClickListener {
-            var email = et_email.text.toString()
-            var password = et_password.text.toString()
-            viewModel.login(email,password)
-            viewModel.loginRes.observe(viewLifecycleOwner) { response ->
-                when(response) {
-                    is ViewState.Loading -> {
-                        login_fetch_progress.visibility = View.VISIBLE
-                        btn_login.visibility = View.GONE
-                    }
-                    is ViewState.Success -> {
-                        prefs.accessToken = response.value!!.data.attributes.accessToken
-                        prefs.refreshToken =response.value!!.data.attributes.refreshToken
-                        navController.navigate(R.id.action_logInFragment_to_startUpFragment)
-                    }
-
-                }
-
-            }
-
+            navController.navigate(R.id.action_logInFragment_to_startUpFragment)
         }
     }
 

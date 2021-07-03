@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
@@ -53,6 +54,9 @@ class SurveyListFragment : Fragment() {
 
     fun getSurveyList(){
         viewModel.getAllSurvey()
+        viewModel.errorMessage.observe(viewLifecycleOwner, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
         viewModel.dataList.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is ViewState.Loading -> {
@@ -64,7 +68,7 @@ class SurveyListFragment : Fragment() {
                     pager.visibility = View.VISIBLE
                     issues_fetch_progress.visibility = View.GONE
                     btn_take_survey.visibility = View.VISIBLE
-                    for(i in response.value!!.data)
+                    for(i in response.value?.body()?.data!!)
                     {
                         surveyList.add(i)
                     }

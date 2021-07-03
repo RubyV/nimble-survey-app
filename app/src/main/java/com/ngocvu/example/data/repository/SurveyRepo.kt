@@ -5,10 +5,11 @@ import com.ngocvu.example.data.request.AuthReqData
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.networking.SurveyAppApi
+import retrofit2.Response
 import javax.inject.Inject
 
 class SurveyRepo @Inject constructor(val api: SurveyAppApi){
-    suspend fun getToken(email: String, password:String) : AuthResData.Res{
+    suspend fun getToken(email: String, password:String) : Response<AuthResData.Res>{
         var res =  api.auth(
             AuthReqData(
                 "password",
@@ -23,7 +24,7 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
 
     }
 
-    suspend fun getList() : SurveyListResData.Res{
+    suspend fun getList() : Response<SurveyListResData.Res> {
         var res =  api.getSurvey(
             1,
             5
