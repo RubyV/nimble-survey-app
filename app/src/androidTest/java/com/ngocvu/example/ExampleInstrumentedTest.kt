@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.oxcoding.moviemvvm", appContext.packageName)
+        assertEquals("com.ngocvu.example", appContext.packageName)
     }
 }

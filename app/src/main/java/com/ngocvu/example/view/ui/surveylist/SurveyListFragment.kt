@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ngocvu.example.R
 import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.view.state.ViewState
@@ -24,6 +26,7 @@ class SurveyListFragment : Fragment() {
     private lateinit var viewModel: SurveyListViewModel
     private lateinit var navController: NavController
     private var surveyList = ArrayList<SurveyListResData.Data>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +48,9 @@ class SurveyListFragment : Fragment() {
         btn_take_survey.setOnClickListener {
             navController.navigate(R.id.action_startUpFragment_to_surveyDetailsFragment)
         }
+
     }
+
     fun getSurveyList(){
         viewModel.getAllSurvey()
         viewModel.dataList.observe(viewLifecycleOwner) { response ->
@@ -65,6 +70,9 @@ class SurveyListFragment : Fragment() {
                     }
                     pager.adapter = SurveyListAdapter(requireContext(),surveyList)
                     pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    TabLayoutMediator(tab_survey, pager) { tab, position ->
+                    }.attach()
+
 
                 }
             }
