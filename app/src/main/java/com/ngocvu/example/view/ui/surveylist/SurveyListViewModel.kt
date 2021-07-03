@@ -25,7 +25,6 @@ class SurveyListViewModel @Inject constructor(
             try {
                 val response = repository.getList()
                 withContext(Dispatchers.Main) {
-
                     dataList.postValue(ViewState.Success(response))
                 }
             }

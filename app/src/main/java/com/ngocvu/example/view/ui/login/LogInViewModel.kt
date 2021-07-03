@@ -25,8 +25,6 @@ class LogInViewModel @Inject constructor(
             try {
                 val response = repository.getToken("dev@nimblehq.co", "12345678")
                 withContext(Dispatchers.Main) {
-
-                    Log.d("Git", response.toString())
                     loginRes.postValue(ViewState.Success(response))
                 }
             }
