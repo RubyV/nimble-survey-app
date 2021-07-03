@@ -1,5 +1,7 @@
 package com.ngocvu.example.data.res
 
+import com.google.gson.annotations.SerializedName
+
 sealed class SurveyListResData {
 
     data class Res(
@@ -15,7 +17,8 @@ sealed class SurveyListResData {
     data class Attributes(
         val title: String,
         val description: String,
-        val cover_image_url: String,
+        @SerializedName("cover_image_url")
+        val coverImageUrl: String,
 
     )
 }

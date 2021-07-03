@@ -51,8 +51,8 @@ class LogInFragment : Fragment() {
                         btn_login.visibility = View.GONE
                     }
                     is ViewState.Success -> {
-                        prefs.accessToken = response.value!!.data.attributes.access_token
-                        prefs.refreshToken =response.value!!.data.attributes.refresh_token
+                        prefs.accessToken = response.value!!.data.attributes.accessToken
+                        prefs.refreshToken =response.value!!.data.attributes.refreshToken
                         navController.navigate(R.id.action_logInFragment_to_startUpFragment)
                     }
 

@@ -36,9 +36,9 @@ class TokenAuthenticator(private val prefs: Prefs): Authenticator {
             val authResponse = client.newCall(request).execute()
             val auth = Gson().fromJson(authResponse.body?.string(), AuthResData.Data::class.java)
             Log.d("Git", auth.toString())
-            prefs.accessToken = auth.attributes.access_token
+            prefs.accessToken = auth.attributes.accessToken
             val httpUrl = response.request.url.newBuilder()
-                .addQueryParameter("Authorization", "Bearer " + auth.attributes.access_token)
+                .addQueryParameter("Authorization", "Bearer " + auth.attributes.accessToken)
                 .build()
             response.request.newBuilder().url(httpUrl).build()
         } else {

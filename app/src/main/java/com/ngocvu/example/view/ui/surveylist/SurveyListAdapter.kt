@@ -24,7 +24,7 @@ class SurveyListAdapter(
     override fun onBindViewHolder(holder: SurveyViewHolder, position: Int) {
         holder.surveyTitle.text = surveyList[position].attributes.title
         holder.surveyDesc.text = surveyList[position].attributes.description
-        var highResImgUrl = surveyList[position].attributes.cover_image_url + "l"
+        var highResImgUrl = surveyList[position].attributes.coverImageUrl + "l"
         Glide.with(context)
             .load(highResImgUrl)
             .into(holder.image)

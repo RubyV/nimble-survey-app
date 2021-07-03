@@ -1,5 +1,7 @@
 package com.ngocvu.example.data.res
 
+import com.google.gson.annotations.SerializedName
+
 sealed class AuthResData{
 
     data class Res(
@@ -13,10 +15,15 @@ sealed class AuthResData{
     )
 
     data class Attributes(
-        val access_token: String,
-        val created_at: Int,
-        val expires_in: Int,
-        val refresh_token: String,
-        val token_type: String
+        @SerializedName("access_token")
+        val accessToken: String,
+        @SerializedName("created_at")
+        val createdAt: Int,
+        @SerializedName("expires_in")
+        val expiresIn: Int,
+        @SerializedName("refresh_token")
+        val refreshToken: String,
+        @SerializedName("token_type")
+        val tokenType: String
     )
 }
