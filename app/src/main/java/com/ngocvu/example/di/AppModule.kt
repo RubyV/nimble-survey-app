@@ -1,6 +1,7 @@
 package com.ngocvu.example.di
 
 import android.content.Context
+import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.networking.SurveyAppApi
 import com.ngocvu.example.networking.TokenAuthenticator
 import com.ngocvu.example.utils.Prefs
@@ -16,6 +17,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import javax.inject.Singleton
 
 @Module
@@ -33,11 +35,11 @@ object AppModule {
 
         var builder =   OkHttpClient.Builder()
         .addNetworkInterceptor(logging)
-        .addInterceptor { chain ->
-            val request = chain.request().newBuilder().addHeader("Authorization", "Bearer " + prefs.accessToken).build()
-            chain.proceed(request) }
+//        .addInterceptor { chain ->
+//            val request = chain.request().newBuilder().addHeader("Authorization", "Bearer " + "9ilXFosf7MM1_mWA3Nem3oEJx3U7lPu_Kpm7OA1f1Xw").build()
+//            chain.proceed(request) }
             .authenticator(TokenAuthenticator(prefs))
-        .build()
+            .build()
         return builder
     }
 
@@ -64,9 +66,12 @@ object AppModule {
     @Provides
     @Singleton
     fun providePrefs(@ApplicationContext context: Context): Prefs = Prefs(context)
+
+
+    @Provides
+    @Singleton
+    fun provideRepo(@SurveyApiStandard api: SurveyAppApi): SurveyRepo = SurveyRepo(api)
 }
-
-
 
 annotation class SurveyRetrofitInterfaceStandard
 

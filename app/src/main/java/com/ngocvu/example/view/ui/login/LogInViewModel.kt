@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.data.res.SurveyListResData
+import com.ngocvu.example.utils.Prefs
 import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LogInViewModel @Inject constructor(
     private val repository: SurveyRepo,
+    private val prefs: Prefs
 ) : ViewModel() {
     val loginRes = MutableLiveData<ViewState<Response<AuthResData.Res>>>()
     var job: Job? = null
@@ -31,6 +33,7 @@ class LogInViewModel @Inject constructor(
             val response = repository.getToken("dev@nimblehq.co", "12345678")
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
+
                     loginRes.postValue(ViewState.Success(response))
                 } else {
                     onError("Error : ${response.message()} ")

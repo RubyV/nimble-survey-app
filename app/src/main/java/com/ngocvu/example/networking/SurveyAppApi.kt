@@ -23,7 +23,7 @@ interface SurveyAppApi {
 
 
     @POST("oauth/token")
-    fun refreshToken(@Body authReqData: RefreshTokenReqData): AuthResData.Res
+    suspend fun refreshToken(@Body authReqData: RefreshTokenReqData): Response<AuthResData.Res>
 
 
 }

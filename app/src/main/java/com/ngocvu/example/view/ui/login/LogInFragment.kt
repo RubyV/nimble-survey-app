@@ -51,8 +51,8 @@ class LogInFragment : Fragment() {
 //                        btn_login.visibility = View.GONE
 //                    }
 //                    is ViewState.Success -> {
-//                        prefs.accessToken = response.value!!.data.attributes.accessToken
-//                        prefs.refreshToken =response.value!!.data.attributes.refreshToken
+//                        prefs.accessToken = response.value!!.body()!!.data.attributes.accessToken
+//                        prefs.refreshToken =response.value!!.body()!!.data.attributes.refreshToken
 //                        navController.navigate(R.id.action_logInFragment_to_startUpFragment)
 //                    }
 //
@@ -64,6 +64,7 @@ class LogInFragment : Fragment() {
         btn_login.setOnClickListener {
             navController.navigate(R.id.action_logInFragment_to_startUpFragment)
         }
+
     }
 
 
