@@ -34,16 +34,4 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
 
     }
 
-//    suspend fun refreshToken() : Response<AuthResData.Res>{
-//        var res =  api.refreshToken(
-//            RefreshTokenReqData(
-//                "refresh_token",
-//                "WN9LHOUTgJbALXFx2oj64FPrfC1-kQXpgo2fqC1rwKo",
-//                BuildConfig.CLIENT_ID,
-//                BuildConfig.CLIENT_SECRET,
-//            )
-//        )
-//        return res
-//
-//    }
 }

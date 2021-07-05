@@ -27,7 +27,6 @@ class TokenAuthenticator @Inject constructor(
     override fun authenticate(route: Route?, response: Response): Request? {
         return if (response?.code == 401) {
             val client = OkHttpClient()
-            var logging =  HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val url = URL("https://survey-api.nimblehq.co/api/v1/oauth/token")
 
             val authRequest = RefreshTokenReqData("refresh_token", prefs.refreshToken, BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET)
