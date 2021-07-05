@@ -13,6 +13,7 @@ class Prefs(context: Context) {
     companion object {
         private const val PREF_ACCESS_TOKEN = "pref_access_token"
         private const val PREF_REFRESH_TOKEN = "pref_refresh_token"
+        private const val PREF_IS_LOGGED_IN = "pref_is_logged_in"
 
     }
 
@@ -37,4 +38,14 @@ class Prefs(context: Context) {
             field = value
             preferences.edit().putString(PREF_REFRESH_TOKEN, value).apply()
         }
+
+    var isLogged: Boolean = false
+        get() {
+            return preferences.getBoolean(PREF_IS_LOGGED_IN, false)
+        }
+        set(value) {
+            field = value
+            preferences.edit().putBoolean(PREF_IS_LOGGED_IN, value).apply()
+        }
+
 }

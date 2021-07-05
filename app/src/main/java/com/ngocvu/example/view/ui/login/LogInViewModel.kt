@@ -33,7 +33,9 @@ class LogInViewModel @Inject constructor(
             val response = repository.getToken("dev@nimblehq.co", "12345678")
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-
+                    prefs.accessToken = response.body()!!.data.attributes.accessToken
+                    prefs.refreshToken = response.body()!!.data.attributes.refreshToken
+                    prefs.isLogged = true
                     loginRes.postValue(ViewState.Success(response))
                 } else {
                     onError("Error : ${response.message()} ")

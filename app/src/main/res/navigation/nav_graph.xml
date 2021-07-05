@@ -14,11 +14,11 @@
 
         <action
             android:id="@+id/action_logInFragment_to_startUpFragment"
-            app:destination="@id/startUpFragment" />
+            app:destination="@id/surveyListFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/startUpFragment"
+        android:id="@+id/surveyListFragment"
         android:name="com.ngocvu.example.view.ui.surveylist.SurveyListFragment"
         android:label="fragment_start_up"
         tools:layout="@layout/fragment_survey_list" >
