@@ -36,7 +36,6 @@ class SurveyListViewModel @Inject constructor(
                 }
                 else
                 {
-                    // dataList.postValue(ViewState.Error("Error fetching survey"))
                     onError("Error : ${response.message()} ")
                 }
 

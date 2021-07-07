@@ -24,20 +24,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    var logging =  HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-
     @Provides
     @Singleton
     @OkHttpClientQualifier
     @JvmStatic
 
     internal fun provideOkHttpClient(prefs: Prefs): OkHttpClient {
-
+        var logging =  HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         var builder =   OkHttpClient.Builder()
         .addNetworkInterceptor(logging)
-//        .addInterceptor { chain ->
-//            val request = chain.request().newBuilder().addHeader("Authorization", "Bearer " + "9ilXFosf7MM1_mWA3Nem3oEJx3U7lPu_Kpm7OA1f1Xw").build()
-//            chain.proceed(request) }
             .authenticator(TokenAuthenticator(prefs))
             .build()
         return builder

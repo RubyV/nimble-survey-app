@@ -2,7 +2,6 @@ package com.ngocvu.example.data.repository
 
 import com.ngocvu.example.BuildConfig
 import com.ngocvu.example.data.request.AuthReqData
-import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.networking.SurveyAppApi
@@ -20,9 +19,7 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
                 BuildConfig.CLIENT_SECRET,
             )
         )
-
         return res
-
     }
 
     suspend fun getList() : Response<SurveyListResData.Res> {
@@ -31,7 +28,6 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
             5
         )
         return res
-
     }
 
 }

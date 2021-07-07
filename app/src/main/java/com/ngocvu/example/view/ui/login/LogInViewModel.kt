@@ -7,6 +7,7 @@ import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.utils.Prefs
+import com.ngocvu.example.utils.RegexUtil
 import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -26,8 +27,12 @@ class LogInViewModel @Inject constructor(
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
+    fun validateEmail(email: String): Boolean {
+        return RegexUtil.validateEmailAddress(email)
+    }
 
     fun login(email: String, password: String) {
+
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loginRes.postValue(ViewState.Loading())
             val response = repository.getToken("dev@nimblehq.co", "12345678")

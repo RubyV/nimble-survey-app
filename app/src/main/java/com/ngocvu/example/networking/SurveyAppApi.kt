@@ -21,9 +21,4 @@ interface SurveyAppApi {
         @Query("size")  size: Int = 5
      ): Response<SurveyListResData.Res>
 
-
-    @POST("oauth/token")
-    suspend fun refreshToken(@Body authReqData: RefreshTokenReqData): Response<AuthResData.Res>
-
-
 }
