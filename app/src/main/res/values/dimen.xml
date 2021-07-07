@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="button_corner_radius">@dimen/_6sdp</dimen>
+
+    <dimen name="top_small_margin">@dimen/_5sdp</dimen>
+    <dimen name="top_xxmargin">@dimen/_20sdp</dimen>
+    <dimen name="left_xxmargin">@dimen/_20sdp</dimen>
+    <dimen name="right_xxmargin">@dimen/_20sdp</dimen>
+
+    <dimen name="et_padding">@dimen/_15sdp</dimen>
+
+
+</resources>
