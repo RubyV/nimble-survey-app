@@ -20,12 +20,9 @@ class SurveyListViewModel @Inject constructor(
     // TODO: Implement the ViewModel
     val dataList = MutableLiveData<ViewState<Response<SurveyListResData.Res>>>()
     var job: Job? = null
-    val errorMessage = MutableLiveData<String>()
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
-    }
+
     fun getAllSurvey() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             dataList.postValue(ViewState.Loading())
 
             val response = repository.getList()
@@ -36,17 +33,13 @@ class SurveyListViewModel @Inject constructor(
                 }
                 else
                 {
-                    onError("Error : ${response.message()} ")
+                    dataList.postValue(ViewState.Error(response.message()))
                 }
 
                 }
         }
 
     }
-    private fun onError(message: String) {
-        errorMessage.value = message
-    }
-
     override fun onCleared() {
         super.onCleared()
         job?.cancel()

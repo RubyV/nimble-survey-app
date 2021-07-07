@@ -23,17 +23,15 @@ class LogInViewModel @Inject constructor(
 ) : ViewModel() {
     val loginRes = MutableLiveData<ViewState<Response<AuthResData.Res>>>()
     var job: Job? = null
-    val errorMessage = MutableLiveData<String>()
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
-    }
+
+
     fun validateEmail(email: String): Boolean {
         return RegexUtil.validateEmailAddress(email)
     }
 
     fun login(email: String, password: String) {
 
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             loginRes.postValue(ViewState.Loading())
             val response = repository.getToken("dev@nimblehq.co", "12345678")
             withContext(Dispatchers.Main) {
@@ -43,15 +41,11 @@ class LogInViewModel @Inject constructor(
                     prefs.isLogged = true
                     loginRes.postValue(ViewState.Success(response))
                 } else {
-                    onError("Error : ${response.message()} ")
+                    loginRes.postValue(ViewState.Error(response.message()))
                 }
             }
         }
 
-    }
-
-    private fun onError(message: String) {
-        errorMessage.value = message
     }
 
     override fun onCleared() {
