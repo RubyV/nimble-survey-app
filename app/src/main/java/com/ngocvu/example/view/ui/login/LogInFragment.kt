@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ngocvu.example.R
@@ -56,7 +57,9 @@ class LogInFragment : Fragment() {
                         is ViewState.Success -> {
                             navController.navigate(R.id.action_logInFragment_to_startUpFragment)
                         }
-
+                        is ViewState.Error -> {
+                            Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                 }

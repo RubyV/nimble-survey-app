@@ -54,9 +54,6 @@ class SurveyListFragment : Fragment() {
 
     fun getSurveyList(){
         viewModel.getAllSurvey()
-        viewModel.errorMessage.observe(viewLifecycleOwner, {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        })
         viewModel.dataList.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is ViewState.Loading -> {
@@ -76,8 +73,9 @@ class SurveyListFragment : Fragment() {
                     pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     TabLayoutMediator(tab_survey, pager) { tab, position ->
                     }.attach()
-
-
+                }
+                is ViewState.Error -> {
+                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
