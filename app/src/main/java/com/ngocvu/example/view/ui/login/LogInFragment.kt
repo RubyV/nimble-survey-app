@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ngocvu.example.R
 import com.ngocvu.example.utils.Prefs
+import com.ngocvu.example.utils.isValidEmail
 import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_log_in.*
@@ -45,7 +46,7 @@ class LogInFragment : Fragment() {
         btn_login.setOnClickListener {
             var email = et_email.text.toString()
             var password = et_password.text.toString()
-            if(viewModel.validateEmail(email))
+            if(email.isValidEmail())
             {
                 viewModel.login(email,password)
                 viewModel.loginRes.observe(viewLifecycleOwner) { response ->

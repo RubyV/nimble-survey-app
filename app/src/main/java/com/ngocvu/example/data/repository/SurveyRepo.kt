@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class SurveyRepo @Inject constructor(val api: SurveyAppApi){
     suspend fun getToken(email: String, password:String) : Response<AuthResData.Res>{
-        var res =  api.auth(
+        val res =  api.auth(
             AuthReqData(
                 "password",
                 email,
@@ -23,7 +23,7 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
     }
 
     suspend fun getList() : Response<SurveyListResData.Res> {
-        var res =  api.getSurvey(
+        val res =  api.getSurvey(
             1,
             5
         )
