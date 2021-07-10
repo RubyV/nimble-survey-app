@@ -65,6 +65,10 @@ class LogInFragment : Fragment() {
 
                 }
             }
+            else
+            {
+                Toast.makeText(context, "Wrong email format", Toast.LENGTH_SHORT).show()
+            }
 
 
         }
