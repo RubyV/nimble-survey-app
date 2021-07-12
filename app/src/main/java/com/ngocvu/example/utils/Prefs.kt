@@ -2,14 +2,10 @@ package com.ngocvu.example.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import androidx.core.content.edit
-import com.google.gson.Gson
-import com.ngocvu.example.data.res.AuthResData
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class Prefs(context: Context) {
-
-
+class Prefs @Inject constructor(@ApplicationContext context: Context){
     companion object {
         private const val PREF_ACCESS_TOKEN = "pref_access_token"
         private const val PREF_REFRESH_TOKEN = "pref_refresh_token"
@@ -17,35 +13,35 @@ class Prefs(context: Context) {
 
     }
 
-    private val preferences: SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
-
+    var prefs: SharedPreferences = context.getSharedPreferences(
+        "com.example.app", Context.MODE_PRIVATE
+    )
 
     var accessToken: String? = null
         get() {
-            return preferences.getString(PREF_ACCESS_TOKEN, null)
+            return prefs.getString(PREF_ACCESS_TOKEN, null)
         }
         set(value) {
             field = value
-            preferences.edit().putString(PREF_ACCESS_TOKEN, value).apply()
+            prefs.edit().putString(PREF_ACCESS_TOKEN, value).apply()
         }
 
     var refreshToken: String? = null
         get() {
-            return preferences.getString(PREF_REFRESH_TOKEN, null)
+            return prefs.getString(PREF_REFRESH_TOKEN, null)
         }
         set(value) {
             field = value
-            preferences.edit().putString(PREF_REFRESH_TOKEN, value).apply()
+            prefs.edit().putString(PREF_REFRESH_TOKEN, value).apply()
         }
 
     var isLogged: Boolean = false
         get() {
-            return preferences.getBoolean(PREF_IS_LOGGED_IN, false)
+            return prefs.getBoolean(PREF_IS_LOGGED_IN, false)
         }
         set(value) {
             field = value
-            preferences.edit().putBoolean(PREF_IS_LOGGED_IN, value).apply()
+            prefs.edit().putBoolean(PREF_IS_LOGGED_IN, value).apply()
         }
 
 }

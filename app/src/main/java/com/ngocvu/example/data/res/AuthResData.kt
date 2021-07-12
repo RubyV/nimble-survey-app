@@ -2,7 +2,7 @@ package com.ngocvu.example.data.res
 
 import com.google.gson.annotations.SerializedName
 
-sealed class AuthResData{
+sealed class AuthResData {
 
     data class Res(
         val data: Data

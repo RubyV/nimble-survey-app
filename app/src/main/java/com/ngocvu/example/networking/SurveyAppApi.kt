@@ -12,13 +12,17 @@ interface SurveyAppApi {
         const val BASE_URL = "https://survey-api.nimblehq.co/api/v1/"
     }
     @POST("oauth/token")
-    suspend fun auth(@Body authReqData: AuthReqData ): Response<AuthResData.Res>
-
+    suspend fun auth(@Body authReqData: AuthReqData ): AuthResData.Res
 
     @GET("surveys?")
     suspend fun getSurvey(
         @Query("number") number: Int = 1,
         @Query("size")  size: Int = 5
-     ): Response<SurveyListResData.Res>
+     ): SurveyListResData.Res
+
+
+    @POST("oauth/token")
+    suspend fun refreshToken(@Body refreshTokenReqData: RefreshTokenReqData): Response<AuthResData.Res>
+
 
 }

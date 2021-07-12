@@ -1,16 +1,19 @@
 package com.ngocvu.example.data.repository
 
 import com.ngocvu.example.BuildConfig
+import com.ngocvu.example.data.entity.SurveyListEntity
+import com.ngocvu.example.data.entity.toSurveyListEntity
 import com.ngocvu.example.data.request.AuthReqData
+import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
-import com.ngocvu.example.data.res.SurveyListResData
 import com.ngocvu.example.networking.SurveyAppApi
-import retrofit2.Response
 import javax.inject.Inject
 
-class SurveyRepo @Inject constructor(val api: SurveyAppApi){
-    suspend fun getToken(email: String, password:String) : Response<AuthResData.Res>{
-        var res =  api.auth(
+class SurveyRepo @Inject constructor(
+    val api: SurveyAppApi
+) {
+    suspend fun getToken(email: String, password: String): AuthResData.Res {
+        val res = api.auth(
             AuthReqData(
                 "password",
                 email,
@@ -22,12 +25,24 @@ class SurveyRepo @Inject constructor(val api: SurveyAppApi){
         return res
     }
 
-    suspend fun getList() : Response<SurveyListResData.Res> {
-        var res =  api.getSurvey(
+    suspend fun getList(): List<SurveyListEntity> {
+        val res = api.getSurvey(
             1,
             5
         )
-        return res
+        return res.data.toSurveyListEntity()
+    }
+
+    suspend fun refreshToken(refreshToken: String): AuthResData.Res {
+        val res = api.refreshToken(
+            RefreshTokenReqData(
+                "refresh_token",
+                refreshToken,
+                BuildConfig.CLIENT_ID,
+                BuildConfig.CLIENT_SECRET,
+            )
+        )
+        return res.body()!!
     }
 
 }

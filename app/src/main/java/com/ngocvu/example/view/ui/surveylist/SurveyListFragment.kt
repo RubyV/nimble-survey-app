@@ -1,23 +1,21 @@
 package com.ngocvu.example.view.ui.surveylist
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ngocvu.example.R
-import com.ngocvu.example.data.res.SurveyListResData
-import com.ngocvu.example.view.state.ViewState
+import com.ngocvu.example.data.entity.SurveyListEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_survey_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlin.collections.ArrayList
 
 
 @ExperimentalCoroutinesApi
@@ -26,7 +24,7 @@ class SurveyListFragment : Fragment() {
 
     private lateinit var viewModel: SurveyListViewModel
     private lateinit var navController: NavController
-    private var surveyList = ArrayList<SurveyListResData.Data>()
+    private var surveyList = ArrayList<SurveyListEntity>()
 
 
     override fun onCreateView(
@@ -42,42 +40,32 @@ class SurveyListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(SurveyListViewModel::class.java)
         navController = Navigation.findNavController(view)
         initView()
-
     }
+
     fun initView() {
         getSurveyList()
         btn_take_survey.setOnClickListener {
             navController.navigate(R.id.action_startUpFragment_to_surveyDetailsFragment)
         }
-
     }
 
-    fun getSurveyList(){
+    fun getSurveyList() {
+        pager.visibility = View.GONE
+        issues_fetch_progress.visibility = View.VISIBLE
+        btn_take_survey.visibility = View.GONE
         viewModel.getAllSurvey()
         viewModel.dataList.observe(viewLifecycleOwner) { response ->
-            when(response) {
-                is ViewState.Loading -> {
-                    pager.visibility = View.GONE
-                    issues_fetch_progress.visibility = View.VISIBLE
-                    btn_take_survey.visibility = View.GONE
-                }
-                is ViewState.Success -> {
-                    pager.visibility = View.VISIBLE
-                    issues_fetch_progress.visibility = View.GONE
-                    btn_take_survey.visibility = View.VISIBLE
-                    for(i in response.value?.body()?.data!!)
-                    {
-                        surveyList.add(i)
-                    }
-                    pager.adapter = SurveyListAdapter(requireContext(),surveyList)
-                    pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                    TabLayoutMediator(tab_survey, pager) { tab, position ->
-                    }.attach()
-                }
-                is ViewState.Error -> {
-                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                }
+            pager.visibility = View.VISIBLE
+            issues_fetch_progress.visibility = View.GONE
+            btn_take_survey.visibility = View.VISIBLE
+            response.forEach {
+                surveyList.add(it)
             }
+            pager.adapter = SurveyListAdapter(requireContext(), surveyList)
+            pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            TabLayoutMediator(tab_survey, pager) { tab, position ->
+            }.attach()
+
         }
     }
 }

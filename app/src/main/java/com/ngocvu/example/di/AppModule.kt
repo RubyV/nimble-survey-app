@@ -5,20 +5,22 @@ import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.networking.SurveyAppApi
 import com.ngocvu.example.networking.TokenAuthenticator
 import com.ngocvu.example.utils.Prefs
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.*
-
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,16 +31,14 @@ object AppModule {
     @OkHttpClientQualifier
     @JvmStatic
 
-    internal fun provideOkHttpClient(prefs: Prefs): OkHttpClient {
-        var logging =  HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        var builder =   OkHttpClient.Builder()
-        .addNetworkInterceptor(logging)
-            .authenticator(TokenAuthenticator(prefs))
+    internal fun provideOkHttpClient(prefs: Prefs, surveyRepo: Lazy<SurveyRepo>): OkHttpClient {
+        var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        var builder = OkHttpClient.Builder()
+            .addNetworkInterceptor(logging)
+            .authenticator(TokenAuthenticator(prefs, surveyRepo))
             .build()
         return builder
     }
-
-
 
     @Provides
     @SurveyApiStandard
@@ -58,15 +58,23 @@ object AppModule {
         retrofit.create(SurveyAppApi::class.java)
 
 
+
+
     @Provides
     @Singleton
     fun providePrefs(@ApplicationContext context: Context): Prefs = Prefs(context)
 
-
     @Provides
     @Singleton
     fun provideRepo(@SurveyApiStandard api: SurveyAppApi): SurveyRepo = SurveyRepo(api)
+
+    @IoDispatcher
+    @Provides
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
 }
+
+annotation class IoDispatcher
 
 annotation class SurveyRetrofitInterfaceStandard
 

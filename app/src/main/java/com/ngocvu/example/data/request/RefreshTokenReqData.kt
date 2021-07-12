@@ -2,7 +2,7 @@ package com.ngocvu.example.data.request
 
 import com.google.gson.annotations.SerializedName
 
-data class RefreshTokenReqData (
+data class RefreshTokenReqData(
     @SerializedName("grant_type")
     val grantType: String = "",
     @SerializedName("refresh_token")

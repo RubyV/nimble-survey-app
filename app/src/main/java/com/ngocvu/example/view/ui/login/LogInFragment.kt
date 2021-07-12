@@ -11,10 +11,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ngocvu.example.R
 import com.ngocvu.example.utils.Prefs
+import com.ngocvu.example.utils.isValidEmail
 import com.ngocvu.example.view.state.ViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -22,7 +24,9 @@ class LogInFragment : Fragment() {
 
     private lateinit var viewModel: LogInViewModel
     private lateinit var navController: NavController
-    private lateinit var prefs: Prefs
+
+    @Inject
+    lateinit var prefs: Prefs
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,21 +39,18 @@ class LogInFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(LogInViewModel::class.java)
         navController = Navigation.findNavController(view)
-        prefs = Prefs(requireContext())
         initView()
-
-
     }
+
     fun initView() {
 
         btn_login.setOnClickListener {
             var email = et_email.text.toString()
             var password = et_password.text.toString()
-            if(viewModel.validateEmail(email))
-            {
-                viewModel.login(email,password)
+            if (email.isValidEmail()) {
+                viewModel.login(email, password)
                 viewModel.loginRes.observe(viewLifecycleOwner) { response ->
-                    when(response) {
+                    when (response) {
                         is ViewState.Loading -> {
                             login_fetch_progress.visibility = View.VISIBLE
                             btn_login.visibility = View.GONE
@@ -63,12 +64,13 @@ class LogInFragment : Fragment() {
                     }
 
                 }
+            } else {
+                Toast.makeText(context, "Wrong email format", Toast.LENGTH_SHORT).show()
             }
 
 
         }
     }
-
 
 
 }
