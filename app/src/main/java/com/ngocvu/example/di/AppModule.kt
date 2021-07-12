@@ -30,11 +30,11 @@ object AppModule {
     @OkHttpClientQualifier
     @JvmStatic
 
-    internal fun provideOkHttpClient(prefs: Prefs, @SurveyApiStandard api: SurveyAppApi): OkHttpClient {
+    internal fun provideOkHttpClient(prefs: Prefs): OkHttpClient {
         var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         var builder = OkHttpClient.Builder()
             .addNetworkInterceptor(logging)
-            .authenticator(TokenAuthenticator(prefs, api))
+            .authenticator(TokenAuthenticator(prefs))
             .build()
         return builder
     }
