@@ -20,5 +20,5 @@ sealed class SurveyListResData {
         @SerializedName("cover_image_url")
         val coverImageUrl: String,
 
-    )
+        )
 }
