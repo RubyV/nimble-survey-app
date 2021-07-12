@@ -5,6 +5,7 @@ import com.ngocvu.example.data.repository.SurveyRepo
 import com.ngocvu.example.networking.SurveyAppApi
 import com.ngocvu.example.networking.TokenAuthenticator
 import com.ngocvu.example.utils.Prefs
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,11 +31,11 @@ object AppModule {
     @OkHttpClientQualifier
     @JvmStatic
 
-    internal fun provideOkHttpClient(prefs: Prefs): OkHttpClient {
+    internal fun provideOkHttpClient(prefs: Prefs, surveyRepo: Lazy<SurveyRepo>): OkHttpClient {
         var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         var builder = OkHttpClient.Builder()
             .addNetworkInterceptor(logging)
-            .authenticator(TokenAuthenticator(prefs))
+            .authenticator(TokenAuthenticator(prefs, surveyRepo))
             .build()
         return builder
     }
@@ -55,6 +56,8 @@ object AppModule {
     @Singleton
     fun provideSurveyApi(@SurveyRetrofitInterfaceStandard retrofit: Retrofit): SurveyAppApi =
         retrofit.create(SurveyAppApi::class.java)
+
+
 
 
     @Provides

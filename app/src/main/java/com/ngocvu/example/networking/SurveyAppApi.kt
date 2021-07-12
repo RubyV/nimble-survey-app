@@ -4,6 +4,7 @@ import com.ngocvu.example.data.request.AuthReqData
 import com.ngocvu.example.data.request.RefreshTokenReqData
 import com.ngocvu.example.data.res.AuthResData
 import com.ngocvu.example.data.res.SurveyListResData
+import retrofit2.Response
 import retrofit2.http.*
 
 interface SurveyAppApi {
@@ -21,8 +22,7 @@ interface SurveyAppApi {
 
 
     @POST("oauth/token")
-    fun refreshToken(@Body refreshTokenReqData: RefreshTokenReqData): AuthResData.Res
-
+    suspend fun refreshToken(@Body refreshTokenReqData: RefreshTokenReqData): Response<AuthResData.Res>
 
 
 }

@@ -33,7 +33,7 @@ class SurveyRepo @Inject constructor(
         return res.data.toSurveyListEntity()
     }
 
-        fun refreshToken(refreshToken: String): AuthResData.Res {
+    suspend fun refreshToken(refreshToken: String): AuthResData.Res {
         val res = api.refreshToken(
             RefreshTokenReqData(
                 "refresh_token",
@@ -42,7 +42,7 @@ class SurveyRepo @Inject constructor(
                 BuildConfig.CLIENT_SECRET,
             )
         )
-        return res
+        return res.body()!!
     }
 
 }
